@@ -14,13 +14,13 @@ int main(int argc, char** argv)
 	// Check VideoCapture documentation.
 	if (!cap.open(0))
 		return 0;
-	for (;;)
+	while (true)
 	{
 		Mat frame;
 		cap >> frame;
 		if (frame.empty()) break; // end of video stream
 		imshow("this is you, smile! :)", frame);
-		if (waitKey(1) == 27) break; // stop capturing by pressing ESC 
+		if (waitKey(1) == 27) break; // stop capturing by pressing ESC
 	}
 	// the camera will be closed automatically upon exit
 	// cap.close();
