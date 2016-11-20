@@ -1,9 +1,10 @@
-#include "Driver.h"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 #include "FaceRecognition.h"
 
-Driver::Driver()
-{
-}
+using namespace std;
+using namespace cv;
 
 int main(int argc, char* argv[])
 {
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
 			rectangle(frame, face, CV_RGB(0, 255, 0), 1);
 		} */
 
-		cout << eyes.size() << endl;
+		//cout << eyes.size() << endl;
 		for (int i = 0; i < eyes.size(); i++) {
 			Rect e = eyes[i];
 			//circle(frame, Point(e.x + e.width / 2, e.y + e.height / 2), 3, Scalar(0, 255, 0), -1, 8);
@@ -57,14 +58,21 @@ int main(int argc, char* argv[])
 			Rect m = mouths[i];
 			rectangle(frame, Point(m.x, m.y), Point(m.x + m.width, m.y + m.height), Scalar(0, 255, 0), 1, 4);
 		}*/
-
-
+	
 
 
 		// project camera images
 		imshow("CSS487 Photobooth", frame);
 
-		// stop capturing by pressing ESC
-		if (waitKey(1) == 27) break;
+		// GET ASCII key code for controls (0-9)
+		// stop capturing with ESC
+		char key = waitKey(1);
+		if (key == 27) {
+			break;
+		}
+		else if (key >= '0' && key <= '9') {
+			cout << key << endl;
+			// ------------------------------------------ call Controller with the key & do stuff 
+		}
 	}
 }
