@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 		/*for (int i = 0; i < faces.size(); i++) {
 			Rect face = faces[i];
 			rectangle(frame, face, CV_RGB(0, 255, 0), 1);
-		} */
+		} 
 
 		//cout << eyes.size() << endl;
 		for (int i = 0; i < eyes.size(); i++) {
@@ -70,9 +70,9 @@ int main(int argc, char* argv[])
 		if (key == 27) {
 			break;
 		}
-		else if (key >= '0' && key <= '9') {
+		else if ((key >= '0' && key <= '9') || key == 'w' || key == 'a' ||  key == 's' || key == 'd') {
 			cout << key << endl;
 			// ------------------------------------------ call Controller with the key & do stuff 
-		}
+		} 
 	}
 }
