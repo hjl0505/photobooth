@@ -1,7 +1,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "ItemOverlay.h"
+#include "FaceRecognition.h"
+#include <iostream>
 
 using namespace cv;
+using namespace std;
 
 #pragma once
 class Controller
@@ -9,8 +12,14 @@ class Controller
 public:
 	Controller();
 	
-	Mat& controls(Mat& image, char key);
+	void controls(Mat& image, char key);
+
 private:
-	char currentItem; // 1: hat, 2: glasses, 3: mustache
+	void getHat(Mat& image, char key);
+	void getGlasses(Mat& image, char key);
+	void getMustache(Mat& image, char key);
+	
+	FaceRecognition faceRec; // FaceRecognition class
+	ItemOverlay over;
 };
 

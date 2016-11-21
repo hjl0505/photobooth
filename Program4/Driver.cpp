@@ -1,78 +1,53 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
-#include "FaceRecognition.h"
+#include "Controller.h"
 
 using namespace std;
 using namespace cv;
 
 int main(int argc, char* argv[])
 {
-	FaceRecognition FR;
-
 	// Use Default Camera (0)
 	VideoCapture camera;
 	if (!camera.open(0)) {
 		return 0;
 	}
 
+	// Initialize Controller
+	Controller cont;
+
+	char lastKey = '0'; // 0: reset, 1: hat, 2: glasses, 3: mustache
+	char key;
+
+	// Start photobooth
 	while (true) {
 		Mat frame;
 		camera >> frame;
 
-		// end of video stream
+		// End of video stream
 		if (frame.empty()) break;
 
-		// flip the frame for ease of use
+		// Flip the frame for ease of use
 		flip(frame, frame, 1);
 
-		// Detect faces and facial features
-		vector<Rect_<int>> faces;
-		vector<Rect_<int>> eyes;
-		vector<Rect_<int>> noses;
-		vector<Rect_<int>> mouths;
-
-		//FR.detectFaces(frame, faces);
-		FR.detectEyes(frame, eyes);
-		//FR.detectNose(frame, noses);
-		//FR.detectMouth(frame, mouths);
-
-		/*for (int i = 0; i < faces.size(); i++) {
-			Rect face = faces[i];
-			rectangle(frame, face, CV_RGB(0, 255, 0), 1);
-		} 
-
-		//cout << eyes.size() << endl;
-		for (int i = 0; i < eyes.size(); i++) {
-			Rect e = eyes[i];
-			//circle(frame, Point(e.x + e.width / 2, e.y + e.height / 2), 3, Scalar(0, 255, 0), -1, 8);
-			rectangle(frame, e, CV_RGB(0, 255, 0), 1);
-		}
-
-		/*for (int i = 0; i < noses.size(); i++) {
-			Rect n = noses[i];
-			circle(frame, Point(n.x + n.width / 2, n.y + n.height / 2), 3, Scalar(0, 255, 0), -1, 8);
-		}
-
-		for (int i = 0; i < mouths.size(); i++) {
-			Rect m = mouths[i];
-			rectangle(frame, Point(m.x, m.y), Point(m.x + m.width, m.y + m.height), Scalar(0, 255, 0), 1, 4);
-		}*/
-	
-
-
-		// project camera images
+		// Project camera images
 		imshow("CSS487 Photobooth", frame);
 
 		// GET ASCII key code for controls (0-9)
-		// stop capturing with ESC
-		char key = waitKey(1);
+		// Stop capturing with ESC
+		key = waitKey(1);
 		if (key == 27) {
 			break;
 		}
 		else if ((key >= '0' && key <= '9') || key == 'w' || key == 'a' ||  key == 's' || key == 'd') {
-			cout << key << endl;
-			// ------------------------------------------ call Controller with the key & do stuff 
-		} 
+			// get photobooth item with new key
+			lastKey = key;
+			cont.controls(frame, key);
+		}
+		else {
+			// continue photobooth with last key
+			cont.controls(frame, lastKey);
+		}
 	}
 }
