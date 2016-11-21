@@ -1,3 +1,10 @@
+// Controller.h
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Redirects user input to the appropriate functionalities of the photobooth
+
 #include <opencv2/highgui/highgui.hpp>
 #include "ItemOverlay.h"
 #include "FaceRecognition.h"
@@ -10,15 +17,16 @@ using namespace std;
 class Controller
 {
 public:
-	Controller();
-	
+	// Functions
 	void controls(Mat& image, char key);
 
 private:
-	void getHat(Mat& image, char key);
-	void getGlasses(Mat& image, char key);
-	void getMustache(Mat& image, char key);
+	// Helper Functions
+	void getHat(Mat& image);
+	void getGlasses(Mat& image);
+	void getMustache(Mat& image);
 	
+	// Variables
 	FaceRecognition faceRec; // FaceRecognition class
 	ItemOverlay over;
 };

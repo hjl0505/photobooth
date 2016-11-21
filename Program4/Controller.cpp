@@ -1,18 +1,19 @@
+// Controller.cpp
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Redirects user input to the appropriate functionalities of the photobooth
+
 #include "Controller.h"
 
-Controller::Controller()
-{
-}
-
-// --------------------------------------- REFERENCE or just Mat?
 // controls
 // Adds correct photobooth item to the input image and returns the new image
-// pre: valid input image, key is valid (0=9, w,a,s,d)
+// pre: valid input image, key is valid (0=9, w,a,s,d (lower case only))
 // post: image returned with photobooth item
 void Controller::controls(Mat& image, char key) {
-	
 	switch (key) {
-		case '0': // Reset, do Nothing
+		case '0': // Reset, do nothing
 			break;
 		case '1': // Hat
 			getHat(image, key);
@@ -36,11 +37,16 @@ void Controller::controls(Mat& image, char key) {
 			over.lastColor(image);
 			break;
 		default:
-			break;
+			break; // Did not match any of the current keys
+				   // Do nothing
 	}
 }
 
-void Controller::getHat(Mat& image, char key) {
+// getHat
+// Calls overlay putHat function to add a hat into the image
+// pre: image is valid
+// post: image returned with photobooth item if face is detected
+void Controller::getHat(Mat& image) {
 	cout << "Controller getHat called" << endl;
 
 	// get faces
@@ -51,7 +57,11 @@ void Controller::getHat(Mat& image, char key) {
 	over.putHat(image, faces);
 }
 
-void Controller::getGlasses(Mat& image, char key) {
+// getGlasses
+// Calls overlay putGlasses function to add glasses into the image
+// pre: image is valid
+// post: image returned with photobooth item if pair of eyes are detected
+void Controller::getGlasses(Mat& image) {
 	cout << "Controller getGlasses called" << endl;
 
 	// get eyes
@@ -62,7 +72,11 @@ void Controller::getGlasses(Mat& image, char key) {
 	over.putGlasses(image, eyes);
 }
 
-void Controller::getMustache(Mat& image, char key) {
+// getMustache
+// Calls overlay putMustache function to add mustache into the image
+// pre: image is valid
+// post: image returned with photobooth item if a face is detected
+void Controller::getMustache(Mat& image) {
 	cout << "Controller getMustache called" << endl;
 
 	// get mouths

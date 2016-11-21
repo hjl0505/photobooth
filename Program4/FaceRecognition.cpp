@@ -1,3 +1,10 @@
+// FaceRecognition.cpp
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Attempts to find faces and facial features of a given image
+
 #include "FaceRecognition.h"
 
 // default constructor
