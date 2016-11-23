@@ -1,3 +1,10 @@
+// Hat.h
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Draws a hat on the input image
+
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
@@ -9,16 +16,21 @@ using namespace std;
 class Hat
 {
 public:
+	// Constructor
 	Hat();
 
-	void putHat(Mat& image, int x, int y);
+	// Functions
+	void putHat(Mat& image, int x, int y, int colors[]);
+	void scaleHat()
 
 private:
+	// Helper Functions
 	void convertBW(Mat& binaryHat, Mat& colorHat);
+	
+	// Variables
+ 	const int HAT_COUNT = 5; 
+	int currentHatIdx;
 
-	int currentHat;
-
-	Mat hat1;
-	Mat hat2;
+	Mat hats[HAT_COUNT];
 };
 

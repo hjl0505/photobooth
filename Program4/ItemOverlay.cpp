@@ -11,7 +11,7 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 
 	for (int i = 0; i < faces.size(); i++) {
 		Rect face = faces[i];
-		hatter.putHat(image, face.x, face.y - face.height);
+		hatter.putHat(image, face.x, face.y, colorchart[currentColor]); // <----------------- might need to adjust this??
 	}
 }
 
