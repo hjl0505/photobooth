@@ -3,14 +3,16 @@
 ItemOverlay::ItemOverlay()
 {
 	currentItem = '0'; // default = No item
-	colorchart[COLOR_COUNT][3]; // [Color][0] : blue, [Color][1] : green, [Color][2] : red
-	for (int c = 0; c < COLOR_COUNT; c++) {
-		
-	}
+	//colorchart[COLOR_COUNT][3]; // [Color][0] : blue, [Color][1] : green, [Color][2] : red
 }
 
 void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 	currentItem = '1';
+
+	for (int i = 0; i < faces.size(); i++) {
+		Rect face = faces[i];
+		hatter.putHat(image, face.x, face.y - face.height);
+	}
 }
 
 void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> faces) {

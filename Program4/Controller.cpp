@@ -16,13 +16,13 @@ void Controller::controls(Mat& image, char key) {
 		case '0': // Reset, do nothing
 			break;
 		case '1': // Hat
-			getHat(image, key);
+			getHat(image);
 			break;
 		case '2': // Glasses
-			getGlasses(image, key);
+			getGlasses(image);
 			break;
 		case '3': // Mustache
-			getMustache(image, key);
+			getMustache(image);
 			break;
 		case 'w': // Next Option
 			over.nextOption(image);
@@ -47,8 +47,6 @@ void Controller::controls(Mat& image, char key) {
 // pre: image is valid
 // post: image returned with photobooth item if face is detected
 void Controller::getHat(Mat& image) {
-	cout << "Controller getHat called" << endl;
-
 	// get faces
 	vector<Rect_<int>> faces; 
 	faceRec.detectFaces(image, faces);
@@ -62,8 +60,6 @@ void Controller::getHat(Mat& image) {
 // pre: image is valid
 // post: image returned with photobooth item if pair of eyes are detected
 void Controller::getGlasses(Mat& image) {
-	cout << "Controller getGlasses called" << endl;
-
 	// get eyes
 	vector<Rect_<int>> eyes;
 	faceRec.detectEyes(image, eyes);
@@ -77,8 +73,6 @@ void Controller::getGlasses(Mat& image) {
 // pre: image is valid
 // post: image returned with photobooth item if a face is detected
 void Controller::getMustache(Mat& image) {
-	cout << "Controller getMustache called" << endl;
-
 	// get mouths
 	vector<Rect_<int>> mouths;
 	faceRec.detectMouth(image, mouths);

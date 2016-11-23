@@ -1,5 +1,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
+#include "Hat.h"
 
 using namespace cv;
 using namespace std;
@@ -27,9 +28,11 @@ private:
 	const int GLASSES_COUNT = 2;
 	const int MUSTACHE_COUNT = 5;
 	
-	int[][] colorChart;
+	//int[][] colorChart;
 	char currentItem; // 1: hat, 2: glasses, 3: mustache
 	int currentOption; // e.g. different type of mustache
 	int currentColor; //0:black, 1: red, 2:blue, 3:green, 4: yellow, 5:purple
+
+	Hat hatter;
 };
 

@@ -31,9 +31,6 @@ int main(int argc, char* argv[])
 		// Flip the frame for ease of use
 		flip(frame, frame, 1);
 
-		// Project camera images
-		imshow("CSS487 Photobooth", frame);
-
 		// GET ASCII key code for controls (0-9)
 		// Stop capturing with ESC
 		key = waitKey(1);
@@ -49,5 +46,8 @@ int main(int argc, char* argv[])
 			// continue photobooth with last key
 			cont.controls(frame, lastKey);
 		}
+
+		// Project camera images
+		imshow("CSS487 Photobooth", frame);
 	}
 }
