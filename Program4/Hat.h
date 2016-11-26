@@ -12,6 +12,8 @@
 using namespace cv;
 using namespace std;
 
+const int HAT_COUNT = 5;
+
 #pragma once
 class Hat
 {
@@ -21,14 +23,13 @@ public:
 
 	// Functions
 	void putHat(Mat& image, int x, int y, int colors[]);
-	void scaleHat()
+	void scaleHat();
 
 private:
 	// Helper Functions
 	void convertBW(Mat& binaryHat, Mat& colorHat);
 	
-	// Variables
- 	const int HAT_COUNT = 5; 
+	// Variables 
 	int currentHatIdx;
 
 	Mat hats[HAT_COUNT];
