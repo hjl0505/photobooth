@@ -19,6 +19,13 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 
 void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> faces) {
 	currentItem = '2';
+
+	for (int i = 0; i < faces.size(); i += 2) {
+		Rect face = faces[i];
+		//glasses.putGlasses(image, face.x, face.y, colorChart[currentColor]); // <----------------- might need to adjust this??
+		glasses.scaleGlasses(face.width, face.height);
+		glasses.putGlasses(image, face.x, face.y, colorChart);
+	}
 }
 
 void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> faces) {

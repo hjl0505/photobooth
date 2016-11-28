@@ -1,6 +1,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
 #include "Hat.h"
+#include "Glasses.h"
 
 using namespace cv;
 using namespace std;
@@ -35,5 +36,6 @@ private:
 	int currentColor; //0:black, 1: red, 2:blue, 3:green, 4: yellow, 5:purple
 
 	Hat hatter;
+	Glasses glasses;
 };
 

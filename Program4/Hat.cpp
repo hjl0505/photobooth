@@ -87,6 +87,9 @@ void Hat::convertBW(Mat& binaryHat, Mat& colorHat) {
 	colorHat = newHat.clone();
 }
 
+// scaleHat
+// pre: width and height of a face are valid
+// post: hat image will be scaled to dimensions of width and height
 void Hat::scaleHat(int width, int height) {
 	Size faceSize(width, height);
 	// scale a fresh copy of hat1
