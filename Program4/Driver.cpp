@@ -47,6 +47,9 @@ int main(int argc, char* argv[])
 			cont.controls(frame, lastKey);
 		}
 
+		// print the lastKey variable on the frame
+		putText(frame, to_string(lastKey), Point(10, frame.rows - 20), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(255, 255, 255));
+
 		// Project camera images
 		imshow("CSS487 Photobooth", frame);
 	}

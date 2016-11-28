@@ -3,7 +3,7 @@
 ItemOverlay::ItemOverlay()
 {
 	currentItem = '0'; // default = No item
-	//colorchart[COLOR_COUNT][3]; // [Color][0] : blue, [Color][1] : green, [Color][2] : red
+	//colorChart[COLOR_COUNT][3]; // [Color][0] : blue, [Color][1] : green, [Color][2] : red
 }
 
 void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
@@ -11,7 +11,9 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 
 	for (int i = 0; i < faces.size(); i++) {
 		Rect face = faces[i];
-		hatter.putHat(image, face.x, face.y, colorchart[currentColor]); // <----------------- might need to adjust this??
+		//hatter.putHat(image, face.x, face.y, colorChart[currentColor]); // <----------------- might need to adjust this??
+		hatter.scaleHat(face.width, face.height);
+		hatter.putHat(image, face.x, face.y, colorChart);
 	}
 }
 

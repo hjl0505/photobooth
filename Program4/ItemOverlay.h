@@ -29,6 +29,7 @@ private:
 	const int MUSTACHE_COUNT = 5;
 	
 	//int[][] colorChart;
+	int colorChart[3] = { 0, 0, 0 };
 	char currentItem; // 1: hat, 2: glasses, 3: mustache
 	int currentOption; // e.g. different type of mustache
 	int currentColor; //0:black, 1: red, 2:blue, 3:green, 4: yellow, 5:purple

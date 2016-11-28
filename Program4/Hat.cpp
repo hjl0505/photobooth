@@ -6,7 +6,6 @@
 // Draws a hat on the input image
 
 #include "Hat.h"
-#include <cmath>
 
 // Constructor
 // Initializes array of hats with hats
@@ -21,6 +20,7 @@ Hat::Hat()
 	Mat tempHat3 = imread("pictures/hat3.jpg", IMREAD_GRAYSCALE);
 	Mat tempHat4 = imread("pictures/hat4.jpg", IMREAD_GRAYSCALE);
 	Mat tempHat5 = imread("pictures/hat5.jpg", IMREAD_GRAYSCALE);
+	Mat tempHat6 = imread("pictures/hat1.jpg", IMREAD_GRAYSCALE); // copy of hat1 to perform scaling on
 	
 	// convert into B/W color image, save into hats array
 	convertBW(tempHat1, hats[0]);
@@ -28,6 +28,8 @@ Hat::Hat()
 	convertBW(tempHat3, hats[2]);
 	convertBW(tempHat4, hats[3]);
 	convertBW(tempHat5, hats[4]);
+	convertBW(tempHat6, hats[5]); // copy of hat1 to perform scaling on
+
 }
 
 // putHat
@@ -83,4 +85,10 @@ void Hat::convertBW(Mat& binaryHat, Mat& colorHat) {
 
 	// Copy the new color hat over to colorHat in the hat array
 	colorHat = newHat.clone();
+}
+
+void Hat::scaleHat(int width, int height) {
+	Size faceSize(width, height);
+	// scale a fresh copy of hat1
+	resize(hats[5], hats[currentHatIdx], faceSize);
 }
