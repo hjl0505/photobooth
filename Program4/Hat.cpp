@@ -6,6 +6,7 @@
 // Draws a hat on the input image
 
 #include "Hat.h"
+#include <cmath>
 
 // Constructor
 // Initializes array of hats with hats
@@ -44,8 +45,8 @@ void Hat::putHat(Mat& image, int x, int y, int colors[]) {
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
-				int tempRow = r + y; //<------------------------------------- NEED TO ADJUST 
-				int tempCol = c + x; //<------------------------------------- NEED TO ADJUST
+				int tempRow = y - hats[currentHatIdx].rows + r; 
+				int tempCol = x + c; //<------------------------------------- NEED TO ADJUST (maybe?)
 
 				// Ignore if hat position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {
