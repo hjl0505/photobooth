@@ -12,7 +12,7 @@
 using namespace cv;
 using namespace std;
 
-const int GLASSES_COUNT = 4;
+const int GLASSES_COUNT = 3;
 
 #pragma once
 class Glasses
@@ -34,7 +34,7 @@ private:
 
 	// Variables 
 	int currentGlassesIndex;
-
+	Mat currentScaledGlasses;
 	Mat glasses[GLASSES_COUNT];
 };
 

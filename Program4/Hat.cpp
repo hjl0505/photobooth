@@ -44,7 +44,7 @@ void Hat::putHat(Mat& image, int x, int y, int colors[]) {
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
 				int tempRow = y - currentScaledHat.rows + r;
-				int tempCol = x + c; //<------------------------------------- NEED TO ADJUST (maybe?)
+				int tempCol = x + c;
 
 				// Ignore if hat position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {

@@ -16,12 +16,10 @@ Glasses::Glasses() {
 	Mat tempGlasses1 = imread("pictures/glasses1.jpg", IMREAD_GRAYSCALE);
 	Mat tempGlasses2 = imread("pictures/glasses2.jpg", IMREAD_GRAYSCALE);
 	Mat tempGlasses3 = imread("pictures/glasses3.jpg", IMREAD_GRAYSCALE);
-	Mat tempGlasses4 = imread("pictures/glasses1.jpg", IMREAD_GRAYSCALE); // copy for scaling
 
 	convertBW(tempGlasses1, glasses[0]);
 	convertBW(tempGlasses2, glasses[1]);
 	convertBW(tempGlasses3, glasses[2]);
-	convertBW(tempGlasses4, glasses[3]); // copy for scaling
 }
 
 // putGlasses
@@ -29,18 +27,18 @@ Glasses::Glasses() {
 // pre: image is valid. x and y position is within the image, and valid color[]
 // post: image contains a pair of glasses on top of the detected head with given color
 void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
-	for (int r = 0; r < glasses[currentGlassesIndex].rows; r++) {
-		for (int c = 0; c < glasses[currentGlassesIndex].cols; c++) {
+	for (int r = 0; r < currentScaledGlasses.rows; r++) {
+		for (int c = 0; c < currentScaledGlasses.cols; c++) {
 			// get values from curent hat image
-			int tempBlue = glasses[currentGlassesIndex].at<Vec3b>(r, c)[0];
-			int tempGreen = glasses[currentGlassesIndex].at<Vec3b>(r, c)[1];
-			int tempRed = glasses[currentGlassesIndex].at<Vec3b>(r, c)[2];
+			int tempBlue = currentScaledGlasses.at<Vec3b>(r, c)[0];
+			int tempGreen = currentScaledGlasses.at<Vec3b>(r, c)[1];
+			int tempRed = currentScaledGlasses.at<Vec3b>(r, c)[2];
 
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
 				int tempRow = y + r;
-				int tempCol = x + c; //<------------------------------------- NEED TO ADJUST (maybe?)
+				int tempCol = x + c;
 
 									 // Ignore if hat position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {
@@ -85,8 +83,8 @@ void Glasses::convertBW(Mat& binaryGlasses, Mat& colorGlasses) {
 // post: glasses image will be scaled to dimensions of width and height
 void Glasses::scaleGlasses(int width, int height) {
 	Size faceSize(width * 2.5, height);
-	// scale a fresh copy of hat1
-	resize(glasses[3], glasses[currentGlassesIndex], faceSize);
+	// scale a fresh copy of glasses at currentGlassesIndex
+	resize(glasses[currentGlassesIndex], currentScaledGlasses, faceSize);
 }
 
 
