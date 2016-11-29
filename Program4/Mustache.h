@@ -1,9 +1,9 @@
-// Glasses.h
+// Mustache.h
 // Chris Knakal and Hyungjin Lee
 // CSS 487 Program 4 -- Photobooth
 // 11.19.2016
 //
-// Draws a pair of glasses on the input image
+// Draws a mustache on the input image
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -12,29 +12,28 @@
 using namespace cv;
 using namespace std;
 
-const int GLASSES_COUNT = 3;
+const int MUSTACHE_COUNT = 8;
 
 #pragma once
-class Glasses
+class Mustache
 {
 public:
 	// Constructor
-	Glasses();
+	Mustache();
 
 	// Functions
-	void putGlasses(Mat& image, int x, int y, int colors[]);
-	void scaleGlasses(int width, int height);
+	void putMustache(Mat& image, int x, int y, int colors[]);
+	void scaleMustache(int width, int height);
 
 	void nextOption();
 	void lastOption();
 
 private:
 	// Helper Functions
-	void convertBW(Mat& binaryGlasses, Mat& colorGlasses);
+	void convertBW(Mat& binaryMustache, Mat& colorMustache);
 
 	// Variables 
-	int currentGlassesIndex;
-	Mat currentScaledGlasses;
-	Mat glasses[GLASSES_COUNT];
+	int currentMustacheIndex;
+	Mat currentScaledMustache;
+	Mat mustache[MUSTACHE_COUNT];
 };
-

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Hat.h"
 #include "Glasses.h"
+#include "Mustache.h"
 
 using namespace cv;
 using namespace std;
@@ -33,6 +34,7 @@ private:
 
 	Hat hatter;
 	Glasses glasses;
+	Mustache mustache;
 
 	void setColorChart();
 };

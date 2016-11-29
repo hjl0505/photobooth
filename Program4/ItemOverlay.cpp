@@ -29,6 +29,13 @@ void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> faces) {
 
 void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> faces) {
 	currentItem = '3';
+
+	for (int i = 0; i < faces.size(); i++)
+	{
+		Rect face = faces[i];
+		mustache.scaleMustache(face.width, face.height);
+		mustache.putMustache(image, face.x, face.y, colorChart);
+	}
 }
 
 void ItemOverlay::nextColor() {
