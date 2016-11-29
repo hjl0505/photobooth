@@ -37,9 +37,12 @@ int main(int argc, char* argv[])
 		if (key == 27) {
 			break;
 		}
-		else if ((key >= '0' && key <= '9') || key == 'w' || key == 'a' ||  key == 's' || key == 'd') {
+		else if ((key >= '0' && key <= '9')) {
 			// get photobooth item with new key
 			lastKey = key;
+			cont.controls(frame, key);
+		}
+		else if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
 			cont.controls(frame, key);
 		}
 		else {
@@ -48,7 +51,8 @@ int main(int argc, char* argv[])
 		}
 
 		// print the lastKey variable on the frame
-		putText(frame, to_string(lastKey), Point(10, frame.rows - 20), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(255, 255, 255));
+		string keyString(1, lastKey);
+		putText(frame, keyString, Point(10, frame.rows - 20), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(255, 255, 255));
 
 		// Project camera images
 		imshow("CSS487 Photobooth", frame);

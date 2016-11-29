@@ -27,6 +27,8 @@ private:
 	void getMustache(Mat& image);
 	
 	// Variables
+	char lastItemKey = 0;
+
 	FaceRecognition faceRec; // FaceRecognition class
 	ItemOverlay over;
 };

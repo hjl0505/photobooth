@@ -14,27 +14,35 @@
 void Controller::controls(Mat& image, char key) {
 	switch (key) {
 		case '0': // Reset, do nothing
+			lastItemKey = key;
 			break;
 		case '1': // Hat
+			lastItemKey = key;
 			getHat(image);
 			break;
 		case '2': // Glasses
+			lastItemKey = key;
 			getGlasses(image);
 			break;
 		case '3': // Mustache
+			lastItemKey = key;
 			getMustache(image);
 			break;
-		case 'w': // Next Option
-			over.nextOption(image);
+		case 'd': // Next Option
+			over.nextOption();
+			controls(image, lastItemKey);
 			break;
-		case 'd': // Last Option
-			over.lastOption(image);
+		case 'a': // Last Option
+			over.lastOption();
+			controls(image, lastItemKey);
 			break;
-		case 's': // Next Color
-			over.nextColor(image);
+		case 'w': // Next Color
+			over.nextColor();
+			controls(image, lastItemKey);
 			break;
-		case 'a': // Last Color
-			over.lastColor(image);
+		case 's': // Last Color
+			over.lastColor();
+			controls(image, lastItemKey);
 			break;
 		default:
 			break; // Did not match any of the current keys
