@@ -28,6 +28,10 @@ void Controller::controls(Mat& image, char key) {
 			lastItemKey = key;
 			getMustache(image);
 			break;
+		case '4': // black and white
+			lastItemKey = key;
+			makeBW(image);
+			break;
 		case 'd': // Next Option
 			over.nextOption();
 			controls(image, lastItemKey);
@@ -87,4 +91,8 @@ void Controller::getMustache(Mat& image) {
 
 	// put mustache on faces
 	over.putMustache(image, mouths);
+}
+
+void Controller::makeBW(Mat& image) {
+	blackWhite.makeBW(image);
 }

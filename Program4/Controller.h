@@ -8,6 +8,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "ItemOverlay.h"
 #include "FaceRecognition.h"
+#include "BlackWhite.h"
 #include <iostream>
 
 using namespace cv;
@@ -25,11 +26,13 @@ private:
 	void getHat(Mat& image);
 	void getGlasses(Mat& image);
 	void getMustache(Mat& image);
+	void makeBW(Mat& image);
 	
 	// Variables
 	char lastItemKey = 0;
 
 	FaceRecognition faceRec; // FaceRecognition class
 	ItemOverlay over;
+	BlackWhite blackWhite;
 };
 
