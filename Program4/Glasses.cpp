@@ -88,3 +88,12 @@ void Glasses::scaleGlasses(int width, int height) {
 	// scale a fresh copy of hat1
 	resize(glasses[3], glasses[currentGlassesIndex], faceSize);
 }
+
+
+void Glasses::nextOption() {
+	currentGlassesIndex = (currentGlassesIndex + 1) % GLASSES_COUNT;
+}
+
+void Glasses::lastOption() {
+	currentGlassesIndex = GLASSES_COUNT + (currentGlassesIndex + 1) % GLASSES_COUNT;
+}

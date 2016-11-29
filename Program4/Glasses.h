@@ -25,6 +25,9 @@ public:
 	void putGlasses(Mat& image, int x, int y, int colors[]);
 	void scaleGlasses(int width, int height);
 
+	void nextOption();
+	void lastOption();
+
 private:
 	// Helper Functions
 	void convertBW(Mat& binaryHat, Mat& colorHat);

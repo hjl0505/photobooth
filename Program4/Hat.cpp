@@ -19,16 +19,12 @@ Hat::Hat()
 	Mat tempHat2 = imread("pictures/hat2.jpg", IMREAD_GRAYSCALE);
 	Mat tempHat3 = imread("pictures/hat3.jpg", IMREAD_GRAYSCALE);
 	Mat tempHat4 = imread("pictures/hat4.jpg", IMREAD_GRAYSCALE);
-	Mat tempHat5 = imread("pictures/hat5.jpg", IMREAD_GRAYSCALE);
-	Mat tempHat6 = imread("pictures/hat1.jpg", IMREAD_GRAYSCALE); // copy of hat1 to perform scaling on
 	
 	// convert into B/W color image, save into hats array
 	convertBW(tempHat1, hats[0]);
 	convertBW(tempHat2, hats[1]);
 	convertBW(tempHat3, hats[2]);
 	convertBW(tempHat4, hats[3]);
-	convertBW(tempHat5, hats[4]);
-	convertBW(tempHat6, hats[5]); // copy of hat1 to perform scaling on
 
 }
 
@@ -37,17 +33,17 @@ Hat::Hat()
 // pre: image is valid. x and y position is within the image, and valid color[]
 // post: image contains a hat on top of the detected head with given color
 void Hat::putHat(Mat& image, int x, int y, int colors[]) {
-	for (int r = 0; r < hats[currentHatIdx].rows; r++) {
-		for (int c = 0; c < hats[currentHatIdx].cols; c++) {
+	for (int r = 0; r < currentScaledHat.rows; r++) {
+		for (int c = 0; c < currentScaledHat.cols; c++) {
 			// get values from curent hat image
-			int tempBlue = hats[currentHatIdx].at<Vec3b>(r, c)[0];
-			int tempGreen = hats[currentHatIdx].at<Vec3b>(r, c)[1];
-			int tempRed = hats[currentHatIdx].at<Vec3b>(r, c)[2];
+			int tempBlue = currentScaledHat.at<Vec3b>(r, c)[0];
+			int tempGreen = currentScaledHat.at<Vec3b>(r, c)[1];
+			int tempRed = currentScaledHat.at<Vec3b>(r, c)[2];
 
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
-				int tempRow = y - hats[currentHatIdx].rows + r; 
+				int tempRow = y - currentScaledHat.rows + r;
 				int tempCol = x + c; //<------------------------------------- NEED TO ADJUST (maybe?)
 
 				// Ignore if hat position goes out of bounds of the image
@@ -92,6 +88,14 @@ void Hat::convertBW(Mat& binaryHat, Mat& colorHat) {
 // post: hat image will be scaled to dimensions of width and height
 void Hat::scaleHat(int width, int height) {
 	Size faceSize(width, height);
-	// scale a fresh copy of hat1
-	resize(hats[5], hats[currentHatIdx], faceSize);
+	resize(hats[currentHatIdx], currentScaledHat, faceSize);
+}
+
+void Hat::nextOption() {
+	currentHatIdx = (currentHatIdx + 1) % HAT_COUNT;
+	cout << currentHatIdx << endl;
+}
+
+void Hat::lastOption() {
+	currentHatIdx = (HAT_COUNT + (currentHatIdx - 1)) % HAT_COUNT;
 }

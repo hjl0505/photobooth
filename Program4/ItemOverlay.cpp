@@ -91,8 +91,30 @@ void ItemOverlay::setColorChart() {
 }
 
 void ItemOverlay::nextOption() {
-
+	switch (currentItem) {
+	case '1': // hat
+		hatter.nextOption();
+		break;
+	case '2': // glasses
+		glasses.nextOption();
+		break;
+	case '3': // mustache
+		break;
+	default:
+		break;
+	}
 }
 void ItemOverlay::lastOption() {
-
+	switch (currentItem) {
+	case '1': // hat
+		hatter.lastOption();
+		break;
+	case '2': // glasses
+		glasses.lastOption();
+		break;
+	case '3': // mustache
+		break;
+	default:
+		break;
+	}
 }

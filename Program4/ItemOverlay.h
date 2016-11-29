@@ -25,9 +25,6 @@ public:
 
 private:
 	const int COLOR_COUNT = 8;
-	const int HAT_COUNT = 2;
-	const int GLASSES_COUNT = 2;
-	const int MUSTACHE_COUNT = 5;
 	
 	int colorChart[3] = { 0, 0, 0 }; // 0: blue, 1: green, 2: red
 	char currentItem; // 1: hat, 2: glasses, 3: mustache

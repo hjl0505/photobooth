@@ -12,7 +12,7 @@
 using namespace cv;
 using namespace std;
 
-const int HAT_COUNT = 6;
+const int HAT_COUNT = 4;
 
 #pragma once
 class Hat
@@ -24,6 +24,8 @@ public:
 	// Functions
 	void putHat(Mat& image, int x, int y, int colors[]);
 	void scaleHat(int width, int height);
+	void nextOption();
+	void lastOption();
 
 private:
 	// Helper Functions
@@ -31,7 +33,7 @@ private:
 	
 	// Variables 
 	int currentHatIdx;
-
+	Mat currentScaledHat;
 	Mat hats[HAT_COUNT];
 };
 
