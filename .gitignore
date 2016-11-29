@@ -72,3 +72,19 @@ Program4/Debug/Source.obj
 Program4/x64/Debug/Program4.pdb
 
 Program4/x64/Debug/Program4.ilk
+
+Program4/x64/Debug/Mustache.obj
+
+Program4/x64/Debug/BlackWhite.obj
+
+Program4/x64/Debug/Controller.obj
+
+Program4/x64/Debug/FaceRecognition.obj
+
+Program4/x64/Debug/FaceSwap.obj
+
+Program4/x64/Debug/Glasses.obj
+
+Program4/x64/Debug/Hat.obj
+
+Program4/x64/Debug/ItemOverlay.obj
