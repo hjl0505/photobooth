@@ -12,7 +12,7 @@
 using namespace cv;
 using namespace std;
 
-const int MUSTACHE_COUNT = 8;
+const int MUSTACHE_COUNT = 7;
 
 #pragma once
 class Mustache

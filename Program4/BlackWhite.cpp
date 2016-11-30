@@ -1,19 +1,16 @@
 #include "BlackWhite.h"
 
+BlackWhite::BlackWhite() {
+	currentColor = 0;
+}
+
 void BlackWhite::makeBW(Mat& image) {
 	//Convert the captured frame from BGR to HSV
 	Mat imgHSV;
 	cvtColor(image, imgHSV, COLOR_BGR2HSV);
 
-
-
-
-	//Threshold the image to RED
 	Mat imgThresholded;
-	inRange(imgHSV, Scalar(120, 150, 60), Scalar(179, 255, 255), imgThresholded); 
-
-
-
+	thresholdImage(imgHSV, imgThresholded);
 
 	//morphological opening (remove small objects from the foreground)
 	erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
@@ -39,4 +36,29 @@ void BlackWhite::makeBW(Mat& image) {
 			}
 		}
 	}
+}
+
+void BlackWhite::thresholdImage(Mat& imgHSV, Mat& image) {
+	switch (currentColor) {
+		case 0: // black
+			inRange(imgHSV, Scalar(0, 150, 60), Scalar(0, 255, 255), image);
+			break;
+		case 1: // red
+			inRange(imgHSV, Scalar(120, 150, 60), Scalar(179, 255, 255), image);
+			break;
+		case 2: // blue
+			inRange(imgHSV, Scalar(85, 150, 60), Scalar(130, 255, 255), image);
+			break;
+		case 3: // green
+			inRange(imgHSV, Scalar(37, 60, 134), Scalar(108, 196, 225), image);
+			break;
+	}
+}
+
+void BlackWhite::nextColor() {
+	currentColor = (currentColor + 1) % COLOR_COUNT;
+}
+
+void BlackWhite::lastColor() {
+	currentColor = (COLOR_COUNT + currentColor - 1) % COLOR_COUNT;
 }

@@ -20,7 +20,6 @@ Mustache::Mustache() {
 	Mat tempMustache5 = imread("pictures/mustache5.jpg", IMREAD_GRAYSCALE);
 	Mat tempMustache6 = imread("pictures/mustache6.jpg", IMREAD_GRAYSCALE);
 	Mat tempMustache7 = imread("pictures/mustache7.jpg", IMREAD_GRAYSCALE);
-	Mat tempMustache8 = imread("pictures/mustache.jpg", IMREAD_GRAYSCALE);
 
 	convertBW(tempMustache1, mustache[0]);
 	convertBW(tempMustache2, mustache[1]);
@@ -29,7 +28,6 @@ Mustache::Mustache() {
 	convertBW(tempMustache5, mustache[4]);
 	convertBW(tempMustache6, mustache[5]);
 	convertBW(tempMustache7, mustache[6]);
-	convertBW(tempMustache8, mustache[7]);
 }
 
 // putMustache
@@ -47,8 +45,8 @@ void Mustache::putMustache(Mat& image, int x, int y, int colors[]) {
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
-				int tempRow = y + r;
-				int tempCol = x + c;
+				int tempRow = y + r -(currentScaledMustache.rows / 8);
+				int tempCol = x + c - (currentScaledMustache.cols / 8);
 
 				// Ignore if hat position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {
@@ -84,7 +82,7 @@ void Mustache::convertBW(Mat& binaryMustache, Mat& colorMustache) {
 		}
 	}
 
-	// Copy the new color hat over to colorHat in the hat array
+	// Copy the new color mustache over to colorMustache in the mustache array
 	colorMustache = newMustache.clone();
 }
 
@@ -92,7 +90,7 @@ void Mustache::convertBW(Mat& binaryMustache, Mat& colorMustache) {
 // pre: width and height of a face are valid
 // post: Mustache image will be scaled to dimensions of width and height
 void Mustache::scaleMustache(int width, int height) {
-	Size faceSize(width, height);
+	Size faceSize(static_cast<int>(width * 1.35), static_cast<int>(height * 2));
 	// scale a fresh copy of Mustache at currentMustacheIndex
 	resize(mustache[currentMustacheIndex], currentScaledMustache, faceSize);
 }
@@ -103,5 +101,6 @@ void Mustache::nextOption() {
 }
 
 void Mustache::lastOption() {
-	currentMustacheIndex = MUSTACHE_COUNT + (currentMustacheIndex + 1) % MUSTACHE_COUNT;
+	currentMustacheIndex = (MUSTACHE_COUNT + (currentMustacheIndex - 1)) % MUSTACHE_COUNT;
+	cout << currentMustacheIndex << endl;
 }

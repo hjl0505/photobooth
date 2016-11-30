@@ -41,11 +41,11 @@ void Controller::controls(Mat& image, char key) {
 			controls(image, lastItemKey);
 			break;
 		case 'w': // Next Color
-			over.nextColor();
+			nextColor();
 			controls(image, lastItemKey);
 			break;
 		case 's': // Last Color
-			over.lastColor();
+			lastColor();
 			controls(image, lastItemKey);
 			break;
 		default:
@@ -89,10 +89,32 @@ void Controller::getMustache(Mat& image) {
 	vector<Rect_<int>> mouths;
 	faceRec.detectMouth(image, mouths);
 
+	// get noses
+	vector<Rect_<int>> noses;
+	faceRec.detectNose(image, noses);
+
 	// put mustache on faces
-	over.putMustache(image, mouths);
+	over.putMustache(image, mouths, noses);
 }
 
 void Controller::makeBW(Mat& image) {
 	blackWhite.makeBW(image);
+}
+
+void Controller::nextColor() {
+	if (lastItemKey == '4') {
+		blackWhite.nextColor();
+	}
+	else {
+		over.nextColor();
+	}
+}
+
+void Controller::lastColor() {
+	if (lastItemKey == '4') {
+		blackWhite.lastColor();
+	}
+	else {
+		over.lastColor();
+	}
 }

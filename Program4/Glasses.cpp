@@ -37,10 +37,10 @@ void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
-				int tempRow = y + r;
-				int tempCol = x + c;
+				int tempRow = y + r - (currentScaledGlasses.rows / 7);
+				int tempCol = x + c - (currentScaledGlasses.cols / 10);
 
-									 // Ignore if hat position goes out of bounds of the image
+				// Ignore if hat position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {
 					image.at<Vec3b>(tempRow, tempCol)[0] = colors[0];
 					image.at<Vec3b>(tempRow, tempCol)[1] = colors[1];
@@ -82,7 +82,7 @@ void Glasses::convertBW(Mat& binaryGlasses, Mat& colorGlasses) {
 // pre: width and height of a face are valid
 // post: glasses image will be scaled to dimensions of width and height
 void Glasses::scaleGlasses(int width, int height) {
-	Size faceSize(width * 2.5, height);
+	Size faceSize(static_cast<int>(width * 3), static_cast<int>(height * 1.5));
 	// scale a fresh copy of glasses at currentGlassesIndex
 	resize(glasses[currentGlassesIndex], currentScaledGlasses, faceSize);
 }
@@ -93,5 +93,5 @@ void Glasses::nextOption() {
 }
 
 void Glasses::lastOption() {
-	currentGlassesIndex = GLASSES_COUNT + (currentGlassesIndex + 1) % GLASSES_COUNT;
+	currentGlassesIndex = (GLASSES_COUNT + (currentGlassesIndex - 1)) % GLASSES_COUNT;
 }

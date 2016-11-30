@@ -43,7 +43,7 @@ void Hat::putHat(Mat& image, int x, int y, int colors[]) {
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
-				int tempRow = y - currentScaledHat.rows + r;
+				int tempRow = y - currentScaledHat.rows + r + (currentScaledHat.rows / 10);
 				int tempCol = x + c;
 
 				// Ignore if hat position goes out of bounds of the image
@@ -93,7 +93,6 @@ void Hat::scaleHat(int width, int height) {
 
 void Hat::nextOption() {
 	currentHatIdx = (currentHatIdx + 1) % HAT_COUNT;
-	cout << currentHatIdx << endl;
 }
 
 void Hat::lastOption() {

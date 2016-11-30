@@ -27,6 +27,8 @@ private:
 	void getGlasses(Mat& image);
 	void getMustache(Mat& image);
 	void makeBW(Mat& image);
+	void nextColor();
+	void lastColor();
 	
 	// Variables
 	char lastItemKey = 0;

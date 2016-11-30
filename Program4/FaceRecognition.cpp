@@ -48,7 +48,7 @@ void FaceRecognition::detectEyes(const Mat& image, vector<Rect_<int>>& eyes) {
 	detectFaces(image, faces);
 
 	// detects eyes in the faces detected
-	for (int i = 0; i < faces.size(); i++) {   //  -----------------------------maybe need to limit to 2?
+	for (int i = 0; i < faces.size(); i++) { 
 		// initialize ROI (region of interest)
 		Rect face = faces[i];
 		Mat ROI = image(Rect(face.x, face.y, face.width, face.height));
@@ -79,7 +79,7 @@ void FaceRecognition::detectNose(const Mat& image, vector<Rect_<int>>& noses) {
 	detectFaces(image, faces);
 
 	// detects nose in the faces detected
-	for (int i = 0; i < faces.size(); i++) {   //  -----------------------------maybe need to limit to 2?
+	for (int i = 0; i < faces.size(); i++) {   
 		// initialize ROI (region of interest)
 		Rect face = faces[i];
 		Mat ROI = image(Rect(face.x, face.y, face.width, face.height));
@@ -110,18 +110,21 @@ void FaceRecognition::detectMouth(const Mat& image, vector<Rect_<int>>& mouths) 
 	detectFaces(image, faces);
 
 	// detects mouth in the faces detected
-	for (int i = 0; i < faces.size(); i++) {   //  -----------------------------maybe need to limit to 2?
+	for (int i = 0; i < faces.size(); i++) {   
 		// initialize ROI (region of interest)
 		Rect face = faces[i];
 		Mat ROI = image(Rect(face.x, face.y, face.width, face.height));
 
-		// detect nose in the ROI
+		// detect mouths in the ROI
 		vector<Rect_<int> > tempMouths;
 		CascadeClassifier mouth_cascade;
 		mouth_cascade.load(mouth_cascade_path);
 		mouth_cascade.detectMultiScale(ROI, tempMouths, 1.20, 5, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-		// add displacement of the face to each nose position
+		vector<Rect_<int> > tempNoses;
+		detectNose(image, tempNoses);
+
+		// add displacement of the face to each mouth position
 		for (int j = 0; j < tempMouths.size(); j++) {
 			Rect mouth = tempMouths[j];
 			mouth.x += face.x;
@@ -151,6 +154,5 @@ bool FaceRecognition::checkInBound(const Rect big, const Rect small) {
 			return true;
 		}
 	}
-
 	return false;
 }

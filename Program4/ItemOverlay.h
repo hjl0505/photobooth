@@ -15,8 +15,8 @@ public:
 	ItemOverlay();
 
 	void putHat(Mat& image, vector<Rect_<int>> faces);
-	void putGlasses(Mat& image, vector<Rect_<int>> faces);
-	void putMustache(Mat& image, vector<Rect_<int>> faces);
+	void putGlasses(Mat& image, vector<Rect_<int>> eyes);
+	void putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect_<int>> noses);
 
 	void nextColor();
 	void lastColor();

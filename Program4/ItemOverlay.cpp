@@ -4,7 +4,6 @@ ItemOverlay::ItemOverlay()
 {
 	currentItem = '0'; // default = No item
 	currentColor = 0;
-	//colorChart[COLOR_COUNT][3]; // [Color][0] : blue, [Color][1] : green, [Color][2] : red
 }
 
 void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
@@ -17,24 +16,45 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 	}
 }
 
-void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> faces) {
+void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> eyes) {
 	currentItem = '2';
 
-	for (int i = 0; i < faces.size(); i += 2) {
-		Rect face = faces[i];
-		glasses.scaleGlasses(face.width, face.height);
-		glasses.putGlasses(image, face.x, face.y, colorChart);
+	// Check if pair of eyes are detected
+	for (int i = 0; i < eyes.size(); i += 2) {
+		Rect rightEye = eyes[i];
+		if ((i + 1) < eyes.size()) {
+			Rect leftEye = eyes[i + 1];
+
+			if (leftEye.x > rightEye.x) {
+				glasses.scaleGlasses(rightEye.width, rightEye.height);
+				glasses.putGlasses(image, rightEye.x, rightEye.y, colorChart);
+			}
+		}
 	}
 }
 
-void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> faces) {
+void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect_<int>> noses) {
 	currentItem = '3';
 
-	for (int i = 0; i < faces.size(); i++)
+	// check for mouths under noses
+	vector<Rect_<int>> tempMouths;
+	for (int m = 0; m < mouths.size(); m++) {
+		for (int n = 0; n < noses.size(); n++) {
+			Rect mouth = mouths[m];
+			Rect nose = noses[n];
+
+			if ((nose.y + nose.height / 2) <= (mouth.y + mouth.height / 2)) {
+				tempMouths.push_back(mouth);
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < tempMouths.size(); i++)
 	{
-		Rect face = faces[i];
-		mustache.scaleMustache(face.width, face.height);
-		mustache.putMustache(image, face.x, face.y, colorChart);
+		Rect mouth = tempMouths[i];
+		mustache.scaleMustache(mouth.width, mouth.height);
+		mustache.putMustache(image, mouth.x, mouth.y, colorChart);
 	}
 }
 
@@ -106,6 +126,7 @@ void ItemOverlay::nextOption() {
 		glasses.nextOption();
 		break;
 	case '3': // mustache
+		mustache.nextOption();
 		break;
 	default:
 		break;
@@ -120,6 +141,7 @@ void ItemOverlay::lastOption() {
 		glasses.lastOption();
 		break;
 	case '3': // mustache
+		mustache.lastOption();
 		break;
 	default:
 		break;
