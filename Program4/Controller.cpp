@@ -45,11 +45,11 @@ void Controller::controls(Mat& image, char key) {
 			pixelate(image);
 			break;
 		case 'd': // Next Option
-			over.nextOption();
+			nextOption();
 			controls(image, lastItemKey);
 			break;
 		case 'a': // Last Option
-			over.lastOption();
+			lastOption();
 			controls(image, lastItemKey);
 			break;
 		case 'w': // Next Color
@@ -128,6 +128,24 @@ void Controller::lastColor() {
 	}
 	else {
 		over.lastColor();
+	}
+}
+
+void Controller::nextOption() {
+	if (lastItemKey == '6') {
+		pixelator.nextOption();
+	}
+	else {
+		over.nextOption();
+	}
+}
+
+void Controller::lastOption() {
+	if (lastItemKey == '6') {
+		pixelator.lastOption();
+	}
+	else {
+		over.lastOption();
 	}
 }
 

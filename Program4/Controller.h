@@ -35,6 +35,8 @@ private:
 	void makeBW(Mat& image);
 	void nextColor();
 	void lastColor();
+	void nextOption();
+	void lastOption();
 	void pixelate(Mat& image);
 	
 	// Variables
