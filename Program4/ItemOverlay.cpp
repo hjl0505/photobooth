@@ -7,33 +7,50 @@
 
 #include "ItemOverlay.h"
 
+// Constructor
+// Initializes variables
 ItemOverlay::ItemOverlay()
 {
 	currentItem = '0'; // default = No item
-	currentColor = 0;
-	lastX = -1;
+	currentColor = 0; // current color is black
+
+	// Used to smooth out the item drawing by skipping frames
+	lastX = -1; 
 	lastY = -1;
 	frameCount = 0;
 }
 
+// putHat
+// draws hat on top of all the faces
+// pre: images are valid
+// post: every detected face in the image has a hat on
 void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 	currentItem = '1';
 
 	for (int i = 0; i < faces.size(); i++) {
+		// resize hat
 		Rect face = faces[i];
 		hatter.scaleHat(face.width, face.height);
 
+		// attempt to smooth out the hat drawing
+		// check if frame should be skipped and drawn in previous position
 		if (checkFrame()) {
+			// draw hat in new position
 			hatter.putHat(image, face.x, face.y, colorChart);
 			lastX = face.x;
 			lastY = face.y;
 		}
 		else {
+			// draw hat in previous position
 			hatter.putHat(image, lastX, lastY, colorChart);
 		}
 	}
 }
 
+// putGlasses
+// draws glasses on all pairs of eyes
+// pre: images are valid
+// post: every detected pair of eyes in the image has glasses on
 void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> eyes) {
 	currentItem = '2';
 
@@ -43,16 +60,22 @@ void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> eyes) {
 			Rect rightEye = eyes[i];
 			Rect leftEye = eyes[i + 1];
 
+			// determine which eye is the left eye
 			if (leftEye.x > rightEye.x) {
 				leftEye = rightEye;
 			}
 
+			// use left eye to sclae and position the glasses
 			glasses.scaleGlasses(leftEye.width, leftEye.height);
 			glasses.putGlasses(image, leftEye.x, leftEye.y, colorChart);
 		}
 	}
 }
 
+// putMustache
+// draws mustaches between mouth and nose
+// pre: images are valid
+// post: every detected pair of eyes in the image has glasses on
 void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect_<int>> noses) {
 	currentItem = '3';
 
@@ -63,6 +86,7 @@ void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect
 			Rect mouth = mouths[m];
 			Rect nose = noses[n];
 
+			// add the mouth into tempMouth list
 			if ((nose.y + nose.height) <= (mouth.y)) {
 				tempMouths.push_back(mouth);
 				break;
@@ -70,6 +94,7 @@ void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect
 		}
 	}
 
+	// draw mustache on all mouths that are under a nose
 	for (int i = 0; i < tempMouths.size(); i++)
 	{
 		Rect mouth = tempMouths[i];
@@ -78,18 +103,29 @@ void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect
 	}
 }
 
+// nextColor
+// increment current color by 1, or start again from 0
+// pre: none
+// post: current color incremented, and colorchart reset to new color 
 void ItemOverlay::nextColor() {
 	currentColor = (currentColor + 1) % COLOR_COUNT;
 	setColorChart();
 }
 
+// lastColor
+// decrement current color by 1, or start again from COLOR_COUNT - 1
+// pre: none
+// post: current color decremented, and colorchart reset to new color 
 void ItemOverlay::lastColor() {
 	currentColor = (COLOR_COUNT + (currentColor - 1)) % COLOR_COUNT;
 	setColorChart();
 }
 
+// setColorChart
+// reset the color chart with currentColor key
+// pre: none
+// post: color chart contains values of indicated color as BGR
 void ItemOverlay::setColorChart() {
-
 	switch (currentColor) {
 		case 0: // Black
 			colorChart[0] = 0;
@@ -132,11 +168,15 @@ void ItemOverlay::setColorChart() {
 			colorChart[2] = 255;
 			break;
 		default:
-			break; // Did not match any of the current keys
+			break; // Did not match any of the current colors
 				   // Do nothing
 	}
 }
 
+// nextOption
+// calls the appropriate nextOption function depending on the currentItem selected
+// pre: none
+// post: next option of currentItem is called
 void ItemOverlay::nextOption() {
 	switch (currentItem) {
 	case '1': // hat
@@ -152,6 +192,11 @@ void ItemOverlay::nextOption() {
 		break;
 	}
 }
+
+// lastOption
+// calls the appropriate lastOption function depending on the currentItem selected
+// pre: none
+// post: last option of currentItem is called
 void ItemOverlay::lastOption() {
 	switch (currentItem) {
 	case '1': // hat
@@ -168,6 +213,10 @@ void ItemOverlay::lastOption() {
 	}
 }
 
+// checkFrame
+// increment frame and check if frame should be skipped
+// pre: none
+// post: returns true if frame is good to be drawn a new item, or false if it should be skipped
 bool ItemOverlay::checkFrame() {
 	frameCount++;
 	if (lastX == -1 && lastY == -1) {

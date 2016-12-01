@@ -20,12 +20,12 @@ public:
 	Pixelate();
 
 	// Functions
+	void pixelateFace(Mat& image, Rect face);
 	void nextOption();
 	void lastOption();
 
 private:
 	// Helper Functions
-	void pixelateFace(Mat& image, Rect face);
 	void getAvgBlockColor(Mat& image, Rect face, int row, int col, int& blueTot, int& greenTot, int& redTot);
 
 	// Variables

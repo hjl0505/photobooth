@@ -48,16 +48,21 @@ void FaceSwap::swap(Mat& image) {
 void FaceSwap::swapHelper(Mat& image, Mat& copyFace, Rect faceTo, Rect faceFrom) {
 	for (int r = 0; r < copyFace.rows; r++) {
 		for (int c = 0; c < copyFace.cols; c++) {
+			// adjust position of face in image
 			int imgRow = r + faceTo.y;
 			int imgCol = c + faceTo.x;
 
+			// calculate center point for both faces
 			int faceToMidX = faceTo.x + faceTo.width / 2;
 			int faceToMidY = faceTo.y + faceTo.height / 2;
 			int faceFromMidX = faceFrom.x + faceFrom.width / 2;
 			int faceFromMidY = faceFrom.y + faceFrom.height / 2;
 
-			bool insideEllipse = insideFaceEllipse(copyFace, faceTo, imgCol, imgRow, Point(faceToMidX, faceToMidY));
+			// check if current pixel is inside ellipse of the face to copy from
+			bool insideEllipse = insideFaceEllipse(copyFace, faceFrom, imgCol, imgRow, Point(faceFromMidX, faceFromMidX));
+
 			if (insideEllipse) {
+				// copy face 
 				if (imgRow < image.rows && imgCol < image.cols) {
 					image.at<Vec3b>(imgRow, imgCol)[0] = copyFace.at<Vec3b>(r, c)[0];
 					image.at<Vec3b>(imgRow, imgCol)[1] = copyFace.at<Vec3b>(r, c)[1];
@@ -69,9 +74,14 @@ void FaceSwap::swapHelper(Mat& image, Mat& copyFace, Rect faceTo, Rect faceFrom)
 	}
 }
 
-bool FaceSwap::insideFaceEllipse(Mat& image, Rect faceTo, int curX, int curY, Point toCenter) {
-	double a = ((curX - toCenter.x) * (curX - toCenter.x)) / ((faceTo.width / 4) * (faceTo.width / 3));
-	double b = ((curY - toCenter.y) * (curY - toCenter.y)) / ((faceTo.height / 4) * (faceTo.height / 3));
+// insideFaceEllipse
+// checks if current x, y point is within the ellipse of the face
+// Equation: ((x - h) ^ 2 / rx ^ 2) + ((y - k) ^ 2 / ry ^ 2) <= 1
+// pre: image is valid
+// post: returns true if current point is within the ellipse
+bool FaceSwap::insideFaceEllipse(Mat& image, Rect face, int curX, int curY, Point center) {
+	double a = ((curX - center.x) * (curX - center.x)) / ((face.width / 4) * (face.width / 3));
+	double b = ((curY - center.y) * (curY - center.y)) / ((face.height / 4) * (face.height / 3));
 
 	if (a + b <= 1) {
 		return true;
@@ -79,13 +89,20 @@ bool FaceSwap::insideFaceEllipse(Mat& image, Rect faceTo, int curX, int curY, Po
 	return false;
 }
 
+// getFaceWidth
+// calculates face width using left of left eye and right of right eye
+// pre: face image is valid
+// post: returns width of the face if two eyes are detected
 int FaceSwap::getFaceWidth(Mat& face) {
+	// Detect eyes in the face
 	vector<Rect_<int>> eyes;
 	faceRec.detectFaces(face, eyes);
 
 	Rect leftEye, rightEye;
 
+	// check if at least 2 eyes are detected
 	if (eyes.size() >= 2) {
+		// determine which eye is left and right
 		if (eyes[0].x < eyes[1].x) {
 			leftEye = eyes[0];
 			rightEye = eyes[1];
@@ -94,30 +111,35 @@ int FaceSwap::getFaceWidth(Mat& face) {
 			leftEye = eyes[1];
 			rightEye = eyes[0];
 		}
+		// return the difference 
+		return rightEye.x + rightEye.width - leftEye.x;
 	}
-	return rightEye.x + rightEye.width - leftEye.x;
+	else return 0;
 }
 
+
+// getFaceHeight
+// calculates face height using top of eye and bottom of mouth
+// pre: face image is valid
+// post: returns height of the face if an eye and a mouth is detected
 int FaceSwap::getFaceHeight(Mat& face) {
+	// detect eyes
 	vector<Rect_<int>> eyes;
 	faceRec.detectFaces(face, eyes);
 
-	Rect leftEye;
+	// get at least 1 eye
+	if (eyes.size() > 0) {
+		Rect eye = eyes[0];
 
-	if (eyes.size() >= 2) {
-		if (eyes[0].x < eyes[1].x) {
-			leftEye = eyes[0];
+		// detect mouth
+		vector<Rect_<int>> mouths;
+		faceRec.detectMouth(face, mouths);
+
+		// get bottom of mouth and top of eye
+		if (mouths.size() >= 1) {
+			return mouths[0].y + mouths[0].height - eye.y;
 		}
-		else {
-			leftEye = eyes[1];
-		}
-	}
-
-	vector<Rect_<int>> mouths;
-	faceRec.detectMouth(face, mouths);
-
-	if (mouths.size() >= 1) {
-		return mouths[0].y - leftEye.y;
+		else return 0;
 	}
 	else return 0;
 }
