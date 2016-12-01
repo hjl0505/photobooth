@@ -13,6 +13,8 @@ x64/Debug/Program4.ilk
 
 .vs/Program4/v14/.suo
 
+.vs/Program4/v14
+
 Program4/x64/Debug/Program4.tlog/CL.read.1.tlog
 
 Program4/x64/Debug/Program4.tlog/CL.command.1.tlog
@@ -73,6 +75,7 @@ Program4/x64/Debug/Program4.pdb
 
 Program4/x64/Debug/Program4.ilk
 
+<<<<<<< Updated upstream
 Program4/x64/Debug/Mustache.obj
 
 Program4/x64/Debug/BlackWhite.obj
@@ -88,3 +91,10 @@ Program4/x64/Debug/Glasses.obj
 Program4/x64/Debug/Hat.obj
 
 Program4/x64/Debug/ItemOverlay.obj
+=======
+Program4/x64
+
+Program4/Program4.VC.db
+
+Program4/.vs/Program4/v14/.suo
+>>>>>>> Stashed changes
