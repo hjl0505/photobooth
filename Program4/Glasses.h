@@ -7,12 +7,11 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
 
 using namespace cv;
 using namespace std;
 
-const int GLASSES_COUNT = 3;
+const int GLASSES_COUNT = 3; // Total number of different glasses available
 
 #pragma once
 class Glasses
@@ -24,7 +23,6 @@ public:
 	// Functions
 	void putGlasses(Mat& image, int x, int y, int colors[]);
 	void scaleGlasses(int width, int height);
-
 	void nextOption();
 	void lastOption();
 
@@ -33,8 +31,8 @@ private:
 	void convertBW(Mat& binaryGlasses, Mat& colorGlasses);
 
 	// Variables 
-	int currentGlassesIndex;
-	Mat currentScaledGlasses;
-	Mat glasses[GLASSES_COUNT];
+	int currentGlassesIndex; // index of glasses in glasses array
+	Mat currentScaledGlasses; // current scaled hat to draw
+	Mat glasses[GLASSES_COUNT]; // glasses array of all available glasses
 };
 

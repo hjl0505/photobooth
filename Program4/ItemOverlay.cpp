@@ -1,3 +1,10 @@
+// ItemOverlay.cpp
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Overlays a Hat, Glasses, or Mustache onto the image
+
 #include "ItemOverlay.h"
 
 ItemOverlay::ItemOverlay()

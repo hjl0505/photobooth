@@ -25,13 +25,13 @@ public:
 	void detectMouth(const Mat& image, vector<Rect_<int>>& mouths);
 
 private:
-	// Helper Function
+	// Helper Functions
 	bool checkInBound(const Rect big, const Rect small);
 
 	// Variables
-	string face_cascade_path;
-	string eye_cascade_path;
-	string nose_cascade_path;
-	string mouth_cascade_path;
+	string face_cascade_path; // file path for face cascade
+	string eye_cascade_path; // file path for eye cascade
+	string nose_cascade_path; // file path for nose cascade
+	string mouth_cascade_path; // file path for mouth cascade
 };
 

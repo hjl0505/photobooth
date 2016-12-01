@@ -43,6 +43,7 @@ void Hat::putHat(Mat& image, int x, int y, int colors[]) {
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
 				// Adjust position to where face is in the image
+				// on top of the head
 				int tempRow = y - currentScaledHat.rows + r + (currentScaledHat.rows / 10);
 				int tempCol = x + c;
 
@@ -84,6 +85,7 @@ void Hat::convertBW(Mat& binaryHat, Mat& colorHat) {
 }
 
 // scaleHat
+// currently selected hat will be scaled to fit the face
 // pre: width and height of a face are valid
 // post: hat image will be scaled to dimensions of width and height
 void Hat::scaleHat(int width, int height) {
@@ -91,10 +93,18 @@ void Hat::scaleHat(int width, int height) {
 	resize(hats[currentHatIdx], currentScaledHat, faceSize);
 }
 
+// nextOption
+// get next index in the circular hat array
+// pre: none
+// post: currentHatIdx incremented by 1
 void Hat::nextOption() {
 	currentHatIdx = (currentHatIdx + 1) % HAT_COUNT;
 }
 
+// lastOption
+// get previous index in the circular hat array
+// pre: none
+// post: currentHatIdx decremented by 1
 void Hat::lastOption() {
 	currentHatIdx = (HAT_COUNT + (currentHatIdx - 1)) % HAT_COUNT;
 }

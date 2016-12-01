@@ -7,6 +7,8 @@
 
 #include "Controller.h"
 
+// Constructor
+// Initializes variables
 Controller::Controller() {
 	lastItemKey = 0;
 }
@@ -68,8 +70,8 @@ void Controller::controls(Mat& image, char key) {
 
 // getHat
 // Calls overlay putHat function to add a hat into the image
-// pre: image is valid
-// post: image returned with photobooth item if face is detected
+// pre: image is valid, in BGR format
+// post: image returned with the photobooth item if face is detected
 void Controller::getHat(Mat& image) {
 	// get faces
 	vector<Rect_<int>> faces; 
@@ -81,8 +83,8 @@ void Controller::getHat(Mat& image) {
 
 // getGlasses
 // Calls overlay putGlasses function to add glasses into the image
-// pre: image is valid
-// post: image returned with photobooth item if pair of eyes are detected
+// pre: image is valid, in BGR format
+// post: image returned with the photobooth item if pair of eyes are detected
 void Controller::getGlasses(Mat& image) {
 	// get eyes
 	vector<Rect_<int>> eyes;
@@ -94,8 +96,8 @@ void Controller::getGlasses(Mat& image) {
 
 // getMustache
 // Calls overlay putMustache function to add mustache into the image
-// pre: image is valid
-// post: image returned with photobooth item if a face is detected
+// pre: image is valid, in BGR format
+// post: image returned with the photobooth item if mouth and nose is detected
 void Controller::getMustache(Mat& image) {
 	// get mouths
 	vector<Rect_<int>> mouths;
@@ -109,53 +111,77 @@ void Controller::getMustache(Mat& image) {
 	over.putMustache(image, mouths, noses);
 }
 
+// makeBW
+// Calls BlackWhite makeBW function to convert image into greyscale
+// pre: image is valid, in BGR format
+// post: image returned in greyscale and selected Color if detected
 void Controller::makeBW(Mat& image) {
 	blackWhite.makeBW(image);
 }
 
-void Controller::nextColor() {
-	if (lastItemKey == '4') {
-		blackWhite.nextColor();
-	}
-	else {
-		over.nextColor();
-	}
-}
-
-void Controller::lastColor() {
-	if (lastItemKey == '4') {
-		blackWhite.lastColor();
-	}
-	else {
-		over.lastColor();
-	}
-}
-
-void Controller::nextOption() {
-	if (lastItemKey == '6') {
-		pixelator.nextOption();
-	}
-	else {
-		over.nextOption();
-	}
-}
-
-void Controller::lastOption() {
-	if (lastItemKey == '6') {
-		pixelator.lastOption();
-	}
-	else {
-		over.lastOption();
-	}
-}
-
+// pixelate
+// Calls Pixelate pixelateFace function to pixelate face detected
+// pre: image is valid, in BGR format
+// post: image returned in greyscale and selected color, if the color is detected
 void Controller::pixelate(Mat& image) {
 	// get faces
 	vector<Rect_<int>> faces;
 	faceRec.detectFaces(image, faces);
 
+	// pixelate faces
 	for (int i = 0; i < faces.size(); i++) {
-		pixelator.pixelator(image, faces[i]);
+		pixelator.pixelateFace(image, faces[i]);
 	}
+}
 
+// nextColor
+// Calls appropriate nextColor function depending on the last Photobooth Item key
+// pre: none
+// post: if color is a valid option, next color on the lastItem is selected
+void Controller::nextColor() {
+	if (lastItemKey == '4') { // BlackWhite 
+		blackWhite.nextColor();
+	}
+	else if (lastItemKey <= ' 3' && lastItemKey > '0') { // Hat, Glasses, Mustache
+		over.nextColor();
+	}
+}
+
+// lastColor
+// Calls appropriate nextColor function depending on the last Photobooth Item key
+// pre: none
+// post: if color is a valid option, last color on the lastItem is selected
+void Controller::lastColor() {
+	if (lastItemKey == '4') { // BlackWhite
+		blackWhite.lastColor();
+	}
+	else if (lastItemKey <= ' 3' && lastItemKey > '0') {  // Hat, Glasses, Mustache
+		over.lastColor();
+	}
+}
+
+// nextOption
+// Calls appropriate nextOption function depending on the last Photobooth Item key
+// pre: none
+// post: if there are multiple options available for the last item, next option of the last item is selected
+void Controller::nextOption() {
+	if (lastItemKey == '6') { // Pixelate
+		pixelator.nextOption();
+	}
+	else if(lastItemKey <= ' 3' && lastItemKey > '0') { // Hat, Glasses, Mustache
+		over.nextOption();
+	}
+}
+
+// lastOption
+// Calls appropriate lastOption function depending on the last Photobooth Item key
+// pre: none
+// post: if there are multiple options available for the last item, next option of the last item is selected
+void Controller::lastOption() {
+	if (lastItemKey == '6') { // Pixelate
+		pixelator.lastOption();
+	}
+	else if (lastItemKey <= ' 3' && lastItemKey > '0')  { // Hat, Glasses, Mustache
+		over.lastOption();
+	}
 }

@@ -7,12 +7,11 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
 
 using namespace cv;
 using namespace std;
 
-const int MUSTACHE_COUNT = 7;
+const int MUSTACHE_COUNT = 7; // Total number of different mustaches available
 
 #pragma once
 class Mustache
@@ -24,7 +23,6 @@ public:
 	// Functions
 	void putMustache(Mat& image, int x, int y, int colors[]);
 	void scaleMustache(int width, int height);
-
 	void nextOption();
 	void lastOption();
 
@@ -33,7 +31,7 @@ private:
 	void convertBW(Mat& binaryMustache, Mat& colorMustache);
 
 	// Variables 
-	int currentMustacheIndex;
-	Mat currentScaledMustache;
-	Mat mustache[MUSTACHE_COUNT];
+	int currentMustacheIndex; // index of mustache in mustache array
+	Mat currentScaledMustache; // current scaled mustache to draw
+	Mat mustache[MUSTACHE_COUNT]; // mustache array of all available mustaches
 };

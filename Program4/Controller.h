@@ -6,8 +6,6 @@
 // Redirects user input to the appropriate functionalities of the photobooth
 
 #include <opencv2/highgui/highgui.hpp>
-#include <iostream>
-
 #include "ItemOverlay.h"
 #include "FaceRecognition.h"
 #include "BlackWhite.h"
@@ -33,17 +31,17 @@ private:
 	void getGlasses(Mat& image);
 	void getMustache(Mat& image);
 	void makeBW(Mat& image);
+	void pixelate(Mat& image);
 	void nextColor();
 	void lastColor();
 	void nextOption();
 	void lastOption();
-	void pixelate(Mat& image);
 	
 	// Variables
-	char lastItemKey;
+	char lastItemKey; // stores the last item selected
 
-	FaceRecognition faceRec; // FaceRecognition class
-	ItemOverlay over;
+	FaceRecognition faceRec;
+	ItemOverlay over; 
 	BlackWhite blackWhite;
 	FaceSwap swapper;
 	Pixelate pixelator;

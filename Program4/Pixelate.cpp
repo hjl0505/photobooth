@@ -1,13 +1,18 @@
+// Pixelate.h
+// Chris Knakal and Hyungjin Lee
+// CSS 487 Program 4 -- Photobooth
+// 11.19.2016
+//
+// Pixelates Faces by varying degrees
+
 #include "Pixelate.h"
-
-
 
 Pixelate::Pixelate()
 {
 	divisions = 80;
 }
 
-void Pixelate::pixelator(Mat& image, Rect face) {
+void Pixelate::pixelateFace(Mat& image, Rect face) {
 
 	int blockWidth = image.cols / divisions;
 	int blockHeight = image.rows / divisions;

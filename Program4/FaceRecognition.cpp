@@ -59,7 +59,7 @@ void FaceRecognition::detectEyes(const Mat& image, vector<Rect_<int>>& eyes) {
 		eyes_cascade.load(eye_cascade_path);
 		eyes_cascade.detectMultiScale(ROI, tempEyes, 1.20, 5, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-		// add displacement of the face to each eye position
+		// adjust displacement of the face to each eye position
 		for (int j = 0; j < tempEyes.size(); j++) {
 			Rect eye = tempEyes[j];
 			eye.x += face.x;
@@ -90,7 +90,7 @@ void FaceRecognition::detectNose(const Mat& image, vector<Rect_<int>>& noses) {
 		nose_cascade.load(nose_cascade_path);
 		nose_cascade.detectMultiScale(ROI, tempNoses, 1.20, 5, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-		// add displacement of the face to each nose position
+		// adjust displacement of the face to each nose position
 		for (int j = 0; j < tempNoses.size(); j++) {
 			Rect nose = tempNoses[j];
 			nose.x += face.x;
@@ -124,7 +124,7 @@ void FaceRecognition::detectMouth(const Mat& image, vector<Rect_<int>>& mouths) 
 		vector<Rect_<int> > tempNoses;
 		detectNose(image, tempNoses);
 
-		// add displacement of the face to each mouth position
+		// adjust displacement of the face to each mouth position
 		for (int j = 0; j < tempMouths.size(); j++) {
 			Rect mouth = tempMouths[j];
 			mouth.x += face.x;

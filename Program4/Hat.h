@@ -7,12 +7,11 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
 
 using namespace cv;
 using namespace std;
 
-const int HAT_COUNT = 4;
+const int HAT_COUNT = 4; // Total number of different hats available
 
 #pragma once
 class Hat
@@ -32,8 +31,8 @@ private:
 	void convertBW(Mat& binaryHat, Mat& colorHat);
 	
 	// Variables 
-	int currentHatIdx;
-	Mat currentScaledHat;
-	Mat hats[HAT_COUNT];
+	int currentHatIdx; // index of hat in hat array
+	Mat currentScaledHat; // current scaled hat to draw
+	Mat hats[HAT_COUNT]; // hat array of all available hats
 };
 

@@ -11,12 +11,15 @@
 // Initializes an array of glasses with glasses
 Glasses::Glasses() {
 
+	// Start with glasses 1, index 0
 	currentGlassesIndex = 0;
 
+	// Read glasses images as grayscale
 	Mat tempGlasses1 = imread("pictures/glasses1.jpg", IMREAD_GRAYSCALE);
 	Mat tempGlasses2 = imread("pictures/glasses2.jpg", IMREAD_GRAYSCALE);
 	Mat tempGlasses3 = imread("pictures/glasses3.jpg", IMREAD_GRAYSCALE);
 
+	// convert into B/W color image, save into glasses array
 	convertBW(tempGlasses1, glasses[0]);
 	convertBW(tempGlasses2, glasses[1]);
 	convertBW(tempGlasses3, glasses[2]);
@@ -36,11 +39,12 @@ void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
 
 			// check if color is black and write over the image
 			if (tempBlue < 255 && tempGreen < 255 && tempRed < 255) {
-				// Adjust position to where face is in the image
+				// Adjust position to where eyes are in the image
+				// starts from upper left corner of left eye
 				int tempRow = y + r - (currentScaledGlasses.rows / 7);
 				int tempCol = x + c - (currentScaledGlasses.cols / 10);
 
-				// Ignore if hat position goes out of bounds of the image
+				// Ignore if glasses position goes out of bounds of the image
 				if (tempRow < image.rows && tempCol < image.cols && tempRow >= 0 && tempCol >= 0) {
 					image.at<Vec3b>(tempRow, tempCol)[0] = colors[0];
 					image.at<Vec3b>(tempRow, tempCol)[1] = colors[1];
@@ -79,6 +83,7 @@ void Glasses::convertBW(Mat& binaryGlasses, Mat& colorGlasses) {
 }
 
 // scaleGlasses
+// currently selected glasses will be scaled to fit the eyes
 // pre: width and height of a face are valid
 // post: glasses image will be scaled to dimensions of width and height
 void Glasses::scaleGlasses(int width, int height) {
@@ -87,11 +92,18 @@ void Glasses::scaleGlasses(int width, int height) {
 	resize(glasses[currentGlassesIndex], currentScaledGlasses, faceSize);
 }
 
-
+// nextOption
+// get next index in the circular glasses array
+// pre: none
+// post: currentGlassesIndex incremented by 1
 void Glasses::nextOption() {
 	currentGlassesIndex = (currentGlassesIndex + 1) % GLASSES_COUNT;
 }
 
+// lastOption
+// get previous index in the circular glasses array
+// pre: none
+// post: currentGlassesIndex decremented by 1
 void Glasses::lastOption() {
 	currentGlassesIndex = (GLASSES_COUNT + (currentGlassesIndex - 1)) % GLASSES_COUNT;
 }
