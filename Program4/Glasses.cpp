@@ -26,7 +26,7 @@ Glasses::Glasses() {
 }
 
 // putGlasses
-// Displays at in the image at the current 
+// Displays colored glass in the image at the current detected left eye
 // pre: image is valid. x and y position is within the image, and valid color[]
 // post: image contains a pair of glasses on top of the detected head with given color
 void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
@@ -57,7 +57,7 @@ void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
 
 
 // convertBW
-// converts grey image of the glasses into black and white color image 
+// converts grey image of the glasses into black and white color image
 // pre: images are valid
 // post: binary image of a pair of glasses is converted to color image format
 void Glasses::convertBW(Mat& binaryGlasses, Mat& colorGlasses) {
