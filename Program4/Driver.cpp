@@ -57,4 +57,5 @@ int main(int argc, char* argv[])
 		// Project camera images
 		imshow("CSS487 Photobooth", frame);
 	}
+
 }

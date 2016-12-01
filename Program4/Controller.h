@@ -6,10 +6,12 @@
 // Redirects user input to the appropriate functionalities of the photobooth
 
 #include <opencv2/highgui/highgui.hpp>
+#include <iostream>
+
 #include "ItemOverlay.h"
 #include "FaceRecognition.h"
 #include "BlackWhite.h"
-#include <iostream>
+#include "FaceSwap.h"
 
 using namespace cv;
 using namespace std;
@@ -18,6 +20,9 @@ using namespace std;
 class Controller
 {
 public:
+	// Constructor
+	Controller();
+
 	// Functions
 	void controls(Mat& image, char key);
 
@@ -31,10 +36,11 @@ private:
 	void lastColor();
 	
 	// Variables
-	char lastItemKey = 0;
+	char lastItemKey;
 
 	FaceRecognition faceRec; // FaceRecognition class
 	ItemOverlay over;
 	BlackWhite blackWhite;
+	FaceSwap swapper;
 };
 

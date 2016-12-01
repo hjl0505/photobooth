@@ -7,6 +7,10 @@
 
 #include "Controller.h"
 
+Controller::Controller() {
+	lastItemKey = 0;
+}
+
 // controls
 // Adds correct photobooth item to the input image and returns the new image
 // pre: valid input image, key is valid (0=9, w,a,s,d (lower case only))
@@ -31,6 +35,10 @@ void Controller::controls(Mat& image, char key) {
 		case '4': // black and white
 			lastItemKey = key;
 			makeBW(image);
+			break;
+		case '5': // faceswap
+			lastItemKey = key;
+			swapper.swap(image);
 			break;
 		case 'd': // Next Option
 			over.nextOption();

@@ -4,6 +4,9 @@ ItemOverlay::ItemOverlay()
 {
 	currentItem = '0'; // default = No item
 	currentColor = 0;
+	lastX = -1;
+	lastY = -1;
+	frameCount = 0;
 }
 
 void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
@@ -12,7 +15,15 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 	for (int i = 0; i < faces.size(); i++) {
 		Rect face = faces[i];
 		hatter.scaleHat(face.width, face.height);
-		hatter.putHat(image, face.x, face.y, colorChart);
+
+		if (checkFrame()) {
+			hatter.putHat(image, face.x, face.y, colorChart);
+			lastX = face.x;
+			lastY = face.y;
+		}
+		else {
+			hatter.putHat(image, lastX, lastY, colorChart);
+		}
 	}
 }
 
@@ -21,14 +32,16 @@ void ItemOverlay::putGlasses(Mat& image, vector<Rect_<int>> eyes) {
 
 	// Check if pair of eyes are detected
 	for (int i = 0; i < eyes.size(); i += 2) {
-		Rect rightEye = eyes[i];
 		if ((i + 1) < eyes.size()) {
+			Rect rightEye = eyes[i];
 			Rect leftEye = eyes[i + 1];
 
 			if (leftEye.x > rightEye.x) {
-				glasses.scaleGlasses(rightEye.width, rightEye.height);
-				glasses.putGlasses(image, rightEye.x, rightEye.y, colorChart);
+				leftEye = rightEye;
 			}
+
+			glasses.scaleGlasses(leftEye.width, leftEye.height);
+			glasses.putGlasses(image, leftEye.x, leftEye.y, colorChart);
 		}
 	}
 }
@@ -43,7 +56,7 @@ void ItemOverlay::putMustache(Mat& image, vector<Rect_<int>> mouths, vector<Rect
 			Rect mouth = mouths[m];
 			Rect nose = noses[n];
 
-			if ((nose.y + nose.height / 2) <= (mouth.y + mouth.height / 2)) {
+			if ((nose.y + nose.height) <= (mouth.y)) {
 				tempMouths.push_back(mouth);
 				break;
 			}
@@ -146,4 +159,16 @@ void ItemOverlay::lastOption() {
 	default:
 		break;
 	}
+}
+
+bool ItemOverlay::checkFrame() {
+	frameCount++;
+	if (lastX == -1 && lastY == -1) {
+		return true;
+	}
+	if (frameCount == MAX_FRAME) {
+		frameCount = 0;
+		return true;
+	}
+	return false;
 }

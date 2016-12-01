@@ -26,16 +26,21 @@ public:
 
 private:
 	const int COLOR_COUNT = 8;
+	const int MAX_FRAME = 10;
 	
 	int colorChart[3] = { 0, 0, 0 }; // 0: blue, 1: green, 2: red
 	char currentItem; // 1: hat, 2: glasses, 3: mustache
 	int currentOption; // e.g. different type of mustache
 	int currentColor; //0:black, 1: red, 2:blue, 3:green, 4: yellow, 5:Orange
+	int lastX;
+	int lastY;
+	int frameCount;
 
 	Hat hatter;
 	Glasses glasses;
 	Mustache mustache;
 
 	void setColorChart();
+	bool checkFrame();
 };
 

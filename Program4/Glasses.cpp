@@ -29,7 +29,7 @@ Glasses::Glasses() {
 void Glasses::putGlasses(Mat& image, int x, int y, int colors[]) {
 	for (int r = 0; r < currentScaledGlasses.rows; r++) {
 		for (int c = 0; c < currentScaledGlasses.cols; c++) {
-			// get values from curent hat image
+			// get values from curent glasses image
 			int tempBlue = currentScaledGlasses.at<Vec3b>(r, c)[0];
 			int tempGreen = currentScaledGlasses.at<Vec3b>(r, c)[1];
 			int tempRed = currentScaledGlasses.at<Vec3b>(r, c)[2];
