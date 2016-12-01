@@ -1,4 +1,4 @@
-// BlackWhite.h
+// BlackWhite.cpp
 // Chris Knakal and Hyungjin Lee
 // CSS 487 Program 4 -- Photobooth
 // 11.19.2016
@@ -16,7 +16,7 @@ BlackWhite::BlackWhite() {
 // makeBW
 // Selects color by using HSV from the image, and converts rest of the image into greyscale
 // pre: image is in BGR format
-// post: greyscaled image returned in BGR format 
+// post: greyscaled image returned in BGR format
 void BlackWhite::makeBW(Mat& image) {
 	//Convert the image from BGR to HSV
 	Mat imgHSV;
