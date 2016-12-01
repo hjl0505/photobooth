@@ -40,6 +40,10 @@ void Controller::controls(Mat& image, char key) {
 			lastItemKey = key;
 			swapper.swap(image);
 			break;
+		case '6': // pixelate
+			lastItemKey = key;
+			pixelate(image);
+			break;
 		case 'd': // Next Option
 			over.nextOption();
 			controls(image, lastItemKey);
@@ -125,4 +129,15 @@ void Controller::lastColor() {
 	else {
 		over.lastColor();
 	}
+}
+
+void Controller::pixelate(Mat& image) {
+	// get faces
+	vector<Rect_<int>> faces;
+	faceRec.detectFaces(image, faces);
+
+	for (int i = 0; i < faces.size(); i++) {
+		pixelator.pixelator(image, faces[i]);
+	}
+
 }

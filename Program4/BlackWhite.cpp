@@ -9,21 +9,13 @@ void BlackWhite::makeBW(Mat& image) {
 	Mat imgHSV;
 	cvtColor(image, imgHSV, COLOR_BGR2HSV);
 
-	Mat imgThresholded;
-	thresholdImage(imgHSV, imgThresholded);
-
-	//morphological opening (remove small objects from the foreground)
-	erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-
-	//morphological closing (fill small holes in the foreground)
-	dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	Mat thresholdImg;
+	thresholdImage(imgHSV, thresholdImg);
 
 	// Convert to AVG greyscale if color not detected
 	for (int r = 0; r < image.rows; r++) {
 		for (int c = 0; c < image.cols; c++) {
-			int i = imgThresholded.at<uchar>(r, c);
+			int i = thresholdImg.at<uchar>(r, c);
 			if (i == 0) {
 				int blue = image.at<Vec3b>(r, c)[0];
 				int green = image.at<Vec3b>(r, c)[1];
@@ -47,10 +39,10 @@ void BlackWhite::thresholdImage(Mat& imgHSV, Mat& image) {
 			inRange(imgHSV, Scalar(120, 150, 60), Scalar(179, 255, 255), image);
 			break;
 		case 2: // blue
-			inRange(imgHSV, Scalar(85, 150, 60), Scalar(130, 255, 255), image);
+			inRange(imgHSV, Scalar(95, 150, 60), Scalar(130, 255, 255), image);
 			break;
 		case 3: // green
-			inRange(imgHSV, Scalar(37, 60, 134), Scalar(108, 196, 225), image);
+			inRange(imgHSV, Scalar(35, 110, 85), Scalar(105, 175, 225), image);
 			break;
 	}
 }

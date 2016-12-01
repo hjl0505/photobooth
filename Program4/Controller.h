@@ -12,6 +12,7 @@
 #include "FaceRecognition.h"
 #include "BlackWhite.h"
 #include "FaceSwap.h"
+#include "Pixelate.h"
 
 using namespace cv;
 using namespace std;
@@ -34,6 +35,7 @@ private:
 	void makeBW(Mat& image);
 	void nextColor();
 	void lastColor();
+	void pixelate(Mat& image);
 	
 	// Variables
 	char lastItemKey;
@@ -42,5 +44,6 @@ private:
 	ItemOverlay over;
 	BlackWhite blackWhite;
 	FaceSwap swapper;
+	Pixelate pixelator;
 };
 

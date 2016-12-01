@@ -68,12 +68,10 @@ void FaceSwap::swap(Mat& image) {
 
 
 void FaceSwap::swapHelper(Mat& image, Mat& copyFace, Rect faceTo, Rect faceFrom) {
-	for (int r = 0; r < faceTo.height; r++) {
-		for (int c = 0; c < faceTo.width; c++) {
+	for (int r = 0; r < copyFace.rows; r++) {
+		for (int c = 0; c < copyFace.cols; c++) {
 			int imgRow = r + faceTo.y;
 			int imgCol = c + faceTo.x;
-			int faceFromRow = r;//+ faceFrom.y;
-			int faceFromCol = c;//+ faceFrom.x;
 
 			int faceToMidX = faceTo.x + faceTo.width / 2;
 			int faceToMidY = faceTo.y + faceTo.height / 2;
@@ -82,9 +80,11 @@ void FaceSwap::swapHelper(Mat& image, Mat& copyFace, Rect faceTo, Rect faceFrom)
 
 			bool insideEllipse = insideFaceEllipse(copyFace, faceTo, imgCol, imgRow, Point(faceToMidX, faceToMidY));
 			if (insideEllipse) {
-				image.at<Vec3b>(imgRow, imgCol)[0] = copyFace.at<Vec3b>(faceFromRow, faceFromCol)[0];
-				image.at<Vec3b>(imgRow, imgCol)[1] = copyFace.at<Vec3b>(faceFromRow, faceFromCol)[1];
-				image.at<Vec3b>(imgRow, imgCol)[2] = copyFace.at<Vec3b>(faceFromRow, faceFromCol)[2];
+				if (imgRow < image.rows && imgCol < image.cols) {
+					image.at<Vec3b>(imgRow, imgCol)[0] = copyFace.at<Vec3b>(r, c)[0];
+					image.at<Vec3b>(imgRow, imgCol)[1] = copyFace.at<Vec3b>(r, c)[1];
+					image.at<Vec3b>(imgRow, imgCol)[2] = copyFace.at<Vec3b>(r, c)[2];
+				}
 			}
 			
 		}
