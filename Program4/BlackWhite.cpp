@@ -58,7 +58,7 @@ void BlackWhite::makeBW(Mat& image) {
 void BlackWhite::thresholdImage(Mat& imgHSV, Mat& image) {
 	switch (currentColor) {
 		case 0: // black
-			inRange(imgHSV, Scalar(0, 150, 60), Scalar(0, 255, 255), image);
+			inRange(imgHSV, Scalar(0, 255, 255), Scalar(0, 255, 255), image);
 			break;
 		case 1: // red
 			inRange(imgHSV, Scalar(120, 150, 60), Scalar(179, 255, 255), image);
