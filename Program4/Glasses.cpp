@@ -87,7 +87,7 @@ void Glasses::convertBW(Mat& binaryGlasses, Mat& colorGlasses) {
 // pre: width and height of a face are valid
 // post: glasses image will be scaled to dimensions of width and height
 void Glasses::scaleGlasses(int width, int height) {
-	Size faceSize(static_cast<int>(width * 3), static_cast<int>(height * 1.5));
+	Size faceSize(static_cast<int>(width * 4), static_cast<int>(height * 1.5));
 	// scale a fresh copy of glasses at currentGlassesIndex
 	resize(glasses[currentGlassesIndex], currentScaledGlasses, faceSize);
 }
