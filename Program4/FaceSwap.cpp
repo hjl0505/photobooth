@@ -59,7 +59,7 @@ void FaceSwap::swapHelper(Mat& image, Mat& copyFace, Rect faceTo, Rect faceFrom)
 			int faceFromMidY = faceFrom.y + faceFrom.height / 2;
 
 			// check if current pixel is inside ellipse of the face to copy from
-			bool insideEllipse = insideFaceEllipse(copyFace, faceFrom, imgCol, imgRow, Point(faceFromMidX, faceFromMidX));
+			bool insideEllipse = insideFaceEllipse(copyFace, faceTo, imgCol, imgRow, Point(faceToMidX, faceToMidY));
 
 			if (insideEllipse) {
 				// copy face 
