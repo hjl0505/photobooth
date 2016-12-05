@@ -32,18 +32,8 @@ void ItemOverlay::putHat(Mat& image, vector<Rect_<int>> faces) {
 		Rect face = faces[i];
 		hatter.scaleHat(face.width, face.height);
 
-		// attempt to smooth out the hat drawing
-		// check if frame should be skipped and drawn in previous position
-		if (checkFrame()) {
-			// draw hat in new position
-			hatter.putHat(image, face.x, face.y, colorChart);
-			lastX = face.x;
-			lastY = face.y;
-		}
-		else {
-			// draw hat in previous position
-			hatter.putHat(image, lastX, lastY, colorChart);
-		}
+		// draw hat
+		hatter.putHat(image, face.x, face.y, colorChart);
 	}
 }
 
